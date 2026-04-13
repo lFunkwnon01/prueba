@@ -1,0 +1,32 @@
+{
+  "name": "api-apuntes-educativos",
+  "version": "1.0.0",
+  "description": "API REST para gestión de apuntes educativos con Node.js y SQLite3",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "seed": "node src/config/seed.js"
+  },
+  "keywords": [
+    "api",
+    "rest",
+    "nodejs",
+    "sqlite3",
+    "educacion"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "better-sqlite3": "^12.9.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-validator": "^7.3.2",
+    "jsonwebtoken": "^9.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}

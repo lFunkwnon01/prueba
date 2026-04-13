@@ -1,0 +1,274 @@
+{
+  "info": {
+    "name": "API Apuntes Educativos",
+    "description": "Colección completa de endpoints para la API de Apuntes Educativos",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://localhost:3000" },
+    { "key": "token", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Registrar Estudiante",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"nuevo@estudiante.edu\",\n  \"password\": \"password123\",\n  \"nombre\": \"Nuevo Estudiante\",\n  \"rol\": \"estudiante\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/api/auth/register" }
+          }
+        },
+        {
+          "name": "Registrar Docente",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"nuevo@docente.edu\",\n  \"password\": \"password123\",\n  \"nombre\": \"Nuevo Docente\",\n  \"rol\": \"docente\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/api/auth/register" }
+          }
+        },
+        {
+          "name": "Login Docente",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.token) {",
+                  "    pm.collectionVariables.set('token', jsonData.token);",
+                  "    console.log('Token guardado exitosamente');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"profesor@universidad.edu\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/api/auth/login" }
+          }
+        },
+        {
+          "name": "Login Estudiante",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.token) {",
+                  "    pm.collectionVariables.set('token', jsonData.token);",
+                  "    console.log('Token guardado exitosamente');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"juan@estudiante.edu\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/api/auth/login" }
+          }
+        },
+        {
+          "name": "Ver Perfil",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{base_url}}/api/auth/profile" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Anuncios",
+      "item": [
+        {
+          "name": "Listar Anuncios",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/anuncios" }
+          }
+        },
+        {
+          "name": "Obtener Anuncio por ID",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/anuncios/1" }
+          }
+        },
+        {
+          "name": "Crear Anuncio (Docente)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Nuevo Anuncio de Prueba\",\n  \"descripcion\": \"Este es un anuncio creado desde Postman para pruebas.\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/api/anuncios" }
+          }
+        },
+        {
+          "name": "Actualizar Anuncio",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Anuncio Actualizado\",\n  \"descripcion\": \"Descripción actualizada del anuncio.\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/api/anuncios/1" }
+          }
+        },
+        {
+          "name": "Eliminar Anuncio",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{base_url}}/api/anuncios/1" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Apuntes",
+      "item": [
+        {
+          "name": "Listar Apuntes",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/apuntes" }
+          }
+        },
+        {
+          "name": "Filtrar Apuntes Gratis",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/apuntes?tipo=gratis" }
+          }
+        },
+        {
+          "name": "Filtrar por Materia",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/apuntes?materia=Programación" }
+          }
+        },
+        {
+          "name": "Obtener Apunte por ID",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/apuntes/1" }
+          }
+        },
+        {
+          "name": "Crear Apunte Gratis",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Apunte de Prueba\",\n  \"descripcion\": \"Descripción del apunte de prueba\",\n  \"contenido\": \"Contenido completo del apunte...\",\n  \"tipo\": \"gratis\",\n  \"materia\": \"Programación\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/api/apuntes" }
+          }
+        },
+        {
+          "name": "Crear Apunte de Pago",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Apunte Premium\",\n  \"descripcion\": \"Apunte detallado y completo\",\n  \"contenido\": \"Contenido premium del apunte...\",\n  \"tipo\": \"pago\",\n  \"precio\": 25.00,\n  \"materia\": \"Física\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/api/apuntes" }
+          }
+        },
+        {
+          "name": "Actualizar Apunte",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Apunte Actualizado\",\n  \"descripcion\": \"Nueva descripción\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/api/apuntes/1" }
+          }
+        },
+        {
+          "name": "Eliminar Apunte",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{base_url}}/api/apuntes/1" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Calificaciones",
+      "item": [
+        {
+          "name": "Calificar Apunte",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id_apunte\": 2,\n  \"puntuacion\": 4,\n  \"comentario\": \"Muy buen material de estudio\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/api/calificaciones" }
+          }
+        },
+        {
+          "name": "Ver Calificaciones de Apunte",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/apuntes/1/calificaciones" }
+          }
+        }
+      ]
+    }
+  ]
+}

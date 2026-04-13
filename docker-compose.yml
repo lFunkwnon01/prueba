@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    container_name: api-apuntes-educativos
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - JWT_SECRET=secreto_produccion_cambiar_esto
+      - JWT_EXPIRES_IN=24h
+      - DB_PATH=./data/apuntes_educativos.db
+    volumes:
+      - sqlite_data:/app/data
+    restart: unless-stopped
+
+volumes:
+  sqlite_data:
+    driver: local
